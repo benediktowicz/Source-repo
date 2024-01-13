@@ -1,0 +1,51 @@
+name: Build and Push Docker Image
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: benediktowicz
+        password: Dasha.33115d
+
+    - name: Build and Push Docker Image
+      uses: docker/build-push-action@v2
+      with:
+        context: .
+        file: ./path/to/Dockerfile
+        platforms: linux/amd64,linux/arm64
+        push: true
+        tags: |
+          benediktowicz/aplikacja-webowa:latest
+          benediktowicz/aplikacja-webowa:1.0
+
+  modify-manifests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Config repo
+        uses: actions/checkout@v2
+        with:
+          repository: benediktowicz/Config-repo
+
+    - name: Update manifests in Config repo
+        run: |
+          sed -i 's|image: aplikacja-webowa:1.0|image: benediktowicz/aplikacja-webowa:1.0|' Config/deployment.yaml
+          git add Config/deployment.yaml
+          git commit -m "Update image in deployment.yaml"
+          git push
