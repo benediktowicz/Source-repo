@@ -43,12 +43,12 @@ jobs:
         with:
           repository: benediktowicz/Config-repo
     
-    - name: Configure Git
+      - name: Configure Git
         run: |
           git config user.name "benediktowicz"
           git config user.email "benediktowicz@gmail.com"
 
-    - name: Update manifests in Config repo
+      - name: Update manifests in Config repo
         run: |
           sed -i 's|image: aplikacja-webowa:1.0|image: benediktowicz/aplikacja-webowa:1.0|' Config/deployment.yaml
           git add Config/deployment.yaml
