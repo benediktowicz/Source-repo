@@ -35,26 +35,27 @@ jobs:
           benediktowicz/aplikacja-webowa:1.0
 
   kubernetesCI:
-    runs-on: ubuntu-latest
+  runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout Config repo
-        uses: actions/checkout@v2
-        with:
-          repository: benediktowicz/Config-repo
-          path: Config-repo
+  steps:
+    - name: Checkout Config repo
+      uses: actions/checkout@v2
+      with:
+        repository: benediktowicz/Config-repo
+        path: Config-repo
 
-      - name: Configure Git
-        run: |
-          git -C Config-repo config user.name "benediktowicz"
-          git -C Config-repo config user.email "benediktowicz@gmail.com"
+    - name: Configure Git
+      run: |
+        git -C Config-repo config user.name "benediktowicz"
+        git -C Config-repo config user.email "benediktowicz@gmail.com"
 
-      - name: Update manifests in Config repo
-        run: |
-          sed -i 's|image: aplikacja-webowa:1.0|image: benediktowicz/aplikacja-webowa:1.0|' Config-repo/deployment.yaml
-          git -C Config-repo add deployment.yaml
-          git -C Config-repo commit -m "Update image in deployment.yaml"
-          git -C Config-repo push https://benediktowicz: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@github.com/benediktowicz/Config-repo.git
+    - name: Update manifests in Config repo
+      run: |
+        sed -i 's|image: aplikacja-webowa:1.0|image: benediktowicz/aplikacja-webowa:1.0|' Config-repo/deployment.yaml
+        git -C Config-repo add deployment.yaml
+        git -C Config-repo commit -m "Update image in deployment.yaml"
+        git -C Config-repo push https://$GH_TOKEN@github.com/benediktowicz/Config-repo.git HEAD:main
+
 
 
 
