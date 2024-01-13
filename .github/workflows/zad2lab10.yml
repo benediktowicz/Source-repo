@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  dockerCI:
     runs-on: ubuntu-latest
 
     steps:
@@ -27,14 +27,14 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         context: .
-        file: ./path/to/Dockerfile
+        file: Dockerfile
         platforms: linux/amd64,linux/arm64
         push: true
         tags: |
           benediktowicz/aplikacja-webowa:latest
           benediktowicz/aplikacja-webowa:1.0
 
-  modify-manifests:
+  kubernetesCI:
     runs-on: ubuntu-latest
 
     steps:
