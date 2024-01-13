@@ -46,9 +46,12 @@ jobs:
 
       - name: Configure Git
         run: |
-          git -C Config-repo config user.name "benediktowicz"
-          git -C Config-repo config user.email "benediktowicz@gmail.com"
-          git -C Config-repo remote set-url origin "https://$TOKEN@github.com/benediktowicz/Config-repo.git"
+          git config user.name "benediktowicz"
+          git config user.email "benediktowicz@gmail.com"
+          git remote set-url origin "https://$GH_TOKEN@github.com/benediktowicz/Config-repo.git"
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
 
 
       - name: Update manifests in Config repo
