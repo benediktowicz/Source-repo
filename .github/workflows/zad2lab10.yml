@@ -20,8 +20,8 @@ jobs:
     - name: Login to DockerHub
       uses: docker/login-action@v1
       with:
-        username: benediktowicz
-        password: Dasha.33115d
+        username: ${{ secrets.USER_NAME }}
+        password: ${{ secrets.PASSWORD }}
 
     - name: Build and Push Docker Image
       uses: docker/build-push-action@v2
@@ -31,8 +31,8 @@ jobs:
         platforms: linux/amd64,linux/arm64
         push: true
         tags: |
-          benediktowicz/aplikacja-webowa:latest
-          benediktowicz/aplikacja-webowa:1.0
+          ${{ secrets.USER_NAME }}/aplikacja-webowa:latest
+          ${{ secrets.USER_NAME }}/aplikacja-webowa:1.0
 
   kubernetesCI:
     runs-on: ubuntu-latest
@@ -41,21 +41,17 @@ jobs:
       - name: Checkout Config repo
         uses: actions/checkout@v2
         with:
-          repository: benediktowicz/Config-repo
+          repository: ${{ secrets.USER_NAME }}/Config-repo
           path: Config-repo
 
       - name: Configure Git
         run: |
-          git config user.name "benediktowicz"
-          git config user.email "benediktowicz@gmail.com"
-          git remote set-url origin "https://$TOKEN@github.com/benediktowicz/Config-repo.git"
-        env:
-          TOKEN: ${{ secrets.TOKEN }}
+          git -C Config-repo config user.name "${{ secrets.USER_NAME }}"
+          git -C Config-repo config user.email "${{ secrets.USER_NAME }}@gmail.com"
 
       - name: Update manifests in Config repo
         run: |
-          sed -i 's|image: aplikacja-webowa:1.0|image: benediktowicz/aplikacja-webowa:1.0|' Config-repo/deployment.yaml
+          sed -i 's|image: aplikacja-webowa:1.0|image: ${{ secrets.USER_NAME }}/aplikacja-webowa:1.0|' Config-repo/deployment.yaml
           git -C Config-repo add deployment.yaml
           git -C Config-repo commit -m "Update image in deployment.yaml"
           git -C Config-repo push
-          
