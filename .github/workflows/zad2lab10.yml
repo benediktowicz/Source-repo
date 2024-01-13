@@ -48,11 +48,9 @@ jobs:
         run: |
           git config user.name "benediktowicz"
           git config user.email "benediktowicz@gmail.com"
-          git remote set-url origin "https://$GH_TOKEN@github.com/benediktowicz/Config-repo.git"
+          git remote set-url origin "https://$TOKEN@github.com/benediktowicz/Config-repo.git"
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
-
-
+          GH_TOKEN: ${{ secrets.TOKEN }}
 
       - name: Update manifests in Config repo
         run: |
@@ -60,3 +58,4 @@ jobs:
           git -C Config-repo add deployment.yaml
           git -C Config-repo commit -m "Update image in deployment.yaml"
           git -C Config-repo push
+          
