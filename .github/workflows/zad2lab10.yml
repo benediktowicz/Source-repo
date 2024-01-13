@@ -54,7 +54,7 @@ jobs:
           sed -i 's|image: aplikacja-webowa:1.0|image: benediktowicz/aplikacja-webowa:1.0|' Config-repo/deployment.yaml
           git -C Config-repo add deployment.yaml
           git -C Config-repo commit -m "Update image in deployment.yaml"
-          git -C Config-repo push
+          git -C Config-repo push https://benediktowicz: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@github.com/benediktowicz/Config-repo.git
 
 
 
