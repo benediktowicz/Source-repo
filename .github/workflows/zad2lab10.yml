@@ -44,14 +44,13 @@ jobs:
           repository: ${{ secrets.USER_NAME }}/Config-repo
           path: Config-repo
 
-      - name: Configure Git
-        run: |
-          git -C Config-repo config user.name "${{ secrets.USER_NAME }}"
-          git -C Config-repo config user.email "${{ secrets.USER_NAME }}@gmail.com"
-
       - name: Update manifests in Config repo
         run: |
           sed -i 's|image: aplikacja-webowa:1.0|image: ${{ secrets.USER_NAME }}/aplikacja-webowa:1.0|' Config-repo/deployment.yaml
+          git -C Config-repo config user.name "${{ secrets.USER_NAME }}"
+          git -C Config-repo config user.email "${{ secrets.USER_NAME }}@gmail.com"
+          git -C Config-repo config credential.helper store <<< "https://${{ secrets.TOKEN }}:x-oauth-basic@github.com"
           git -C Config-repo add deployment.yaml
           git -C Config-repo commit -m "Update image in deployment.yaml"
           git -C Config-repo push
+          git push https://${{ secrets.USER_NAME }}:${{ secrets.TOKEN }}@github.com/${{ secrets.USER_NAME }}/Config-repo.git HEAD:main
