@@ -54,6 +54,4 @@ jobs:
           sed -i 's|image: aplikacja-webowa:1.0|image: benediktowicz/aplikacja-webowa:1.0|' Config-repo/deployment.yaml
           git -C Config-repo add deployment.yaml
           git -C Config-repo commit -m "Update image in deployment.yaml"
-          git -C Config-repo push https://benediktowicz:$SOURCE@github.com/benediktowicz/Config-repo.git HEAD:main
-        env:
-          SOURCE: ${{ secrets.GH_TOKEN }}
+          git -C Config-repo push https://benediktowicz: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@github.com/benediktowicz/Config-repo.git HEAD:main
