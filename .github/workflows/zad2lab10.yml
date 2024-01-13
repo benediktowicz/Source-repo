@@ -43,7 +43,6 @@ jobs:
         with:
           repository: benediktowicz/Config-repo
           path: Config-repo
-          token: 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
 
       - name: Configure Git
         run: |
@@ -55,4 +54,4 @@ jobs:
           sed -i 's|image: aplikacja-webowa:1.0|image: benediktowicz/aplikacja-webowa:1.0|' Config-repo/deployment.yaml
           git -C Config-repo add deployment.yaml
           git -C Config-repo commit -m "Update image in deployment.yaml"
-          git -C Config-repo push origin main
+          git -C Config-repo push https://benediktowicz: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@github.com/benediktowicz/Config-repo.git HEAD:main
