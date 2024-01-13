@@ -43,7 +43,7 @@ jobs:
         with:
           repository: benediktowicz/Config-repo
           path: Config-repo
-          token: ${{ secrets.SOURCE_REPO }}
+          token: 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
 
       - name: Configure Git
         run: |
