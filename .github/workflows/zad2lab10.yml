@@ -50,7 +50,7 @@ jobs:
 
       - name: Update manifests in Config repo
         run: |
-          sed -i 's|image: aplikacja-webowa:1.0|image: benediktowicz/aplikacja-webowa:1.0|' Config/deployment.yaml
+          sed -i 's|image: aplikacja-webowa:1.0|image: benediktowicz/aplikacja-webowa:1.0|' Config-repo/deployment.yaml
           git add Config/deployment.yaml
           git commit -m "Update image in deployment.yaml"
           git push
